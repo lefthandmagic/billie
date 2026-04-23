@@ -244,6 +244,19 @@ export default function ToolPage() {
         onSubmit={handleEmailSubmit}
         onSkip={handleEmailSkip}
       />
+
+      {/* Feedback footer */}
+      <footer className="border-t border-slate-100 mt-8 py-4 px-4">
+        <div className="max-w-4xl mx-auto flex items-center justify-between text-xs text-slate-400">
+          <span>Billie · billie.fyi</span>
+          <a
+            href={`mailto:${process.env.NEXT_PUBLIC_FEEDBACK_EMAIL ?? 'hello@billie.fyi'}?subject=Billie feedback`}
+            className="hover:text-teal-600 transition-colors"
+          >
+            Send feedback →
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

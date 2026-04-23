@@ -176,11 +176,32 @@ export default function LandingPage() {
         </Link>
       </section>
 
+      {/* Feedback strip */}
+      <section className="bg-slate-900 py-8 px-6 text-center">
+        <p className="text-slate-300 text-sm mb-2">
+          Using Billie? We'd genuinely love to hear what you think — what works, what's missing, what could be better.
+        </p>
+        <a
+          href={`mailto:${process.env.NEXT_PUBLIC_FEEDBACK_EMAIL ?? 'hello@billie.fyi'}?subject=Billie feedback`}
+          className="inline-flex items-center gap-2 text-sm font-medium text-teal-400 hover:text-teal-300 transition-colors"
+        >
+          Send feedback →
+        </a>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-slate-100 py-6 px-6">
         <div className="max-w-5xl mx-auto flex items-center justify-between text-sm text-slate-400">
           <span>© 2026 Billie · billie.fyi</span>
-          <span>Built for out-of-network therapists</span>
+          <div className="flex items-center gap-4">
+            <a href="/blog" className="hover:text-slate-600 transition-colors">Blog</a>
+            <a
+              href={`mailto:${process.env.NEXT_PUBLIC_FEEDBACK_EMAIL ?? 'hello@billie.fyi'}?subject=Billie feedback`}
+              className="hover:text-slate-600 transition-colors"
+            >
+              Feedback
+            </a>
+          </div>
         </div>
       </footer>
     </div>
