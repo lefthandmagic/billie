@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { trackEvent } from '@/lib/analytics';
+import { trackEvent, identifyUser } from '@/lib/analytics';
 import { ProviderProfile, Patient, SuperbillDraft } from '@/lib/types';
 import {
   getProvider, saveProvider,
@@ -100,12 +100,20 @@ export default function ToolPage() {
   }
 
   function handleEmailSubmit(email: string) {
-    fetch('https://tally.so/r/wbO7XE', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    }).catch(() => {});
-    trackEvent('email_captured');
+    // Identify in PostHog — ties email to session + all their events
+    identifyUser(email);
+    trackEvent('email_captured', { email });
+
+    // Formspree — sends email directly to your inbox
+    const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+    if (formspreeId) {
+      fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'billie.fyi download modal' }),
+      }).catch(() => {});
+    }
+
     setEmailCaptured(true);
     setShowEmailModal(false);
   }
