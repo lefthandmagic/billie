@@ -8,14 +8,53 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Billie — Beautiful superbills for therapists',
-  description: 'Generate professional superbills in 60 seconds. No EHR required. Free, private, and everything stays in your browser.',
-  keywords: 'superbill generator, therapist superbill, out-of-network billing, LCSW superbill, LPC superbill',
+  metadataBase: new URL('https://billie.fyi'),
+  title: {
+    default: 'Billie — Free Superbill Generator for Therapists',
+    template: '%s | Billie',
+  },
+  description: 'Generate professional superbills in 60 seconds. Free superbill generator for out-of-network therapists — LCSWs, LMFTs, LPCs, Psychologists. No EHR required. Nothing uploaded.',
+  keywords: [
+    'superbill generator',
+    'free superbill generator',
+    'therapist superbill',
+    'out-of-network billing',
+    'LCSW superbill',
+    'LMFT superbill',
+    'LPC superbill',
+    'psychologist superbill',
+    'OON superbill',
+    'superbill template therapy',
+    'how to create a superbill',
+    'mental health superbill',
+    'private practice superbill',
+  ],
+  authors: [{ name: 'Billie' }],
+  creator: 'Billie',
+  alternates: {
+    canonical: 'https://billie.fyi',
+  },
   openGraph: {
-    title: 'Billie — Beautiful superbills for therapists',
-    description: 'Generate professional superbills in 60 seconds. No EHR required.',
+    title: 'Billie — Free Superbill Generator for Therapists',
+    description: 'Generate a professional superbill in 60 seconds. Free, private, no account needed. Built for out-of-network therapists.',
     url: 'https://billie.fyi',
     siteName: 'Billie',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Billie — Free Superbill Generator for Therapists',
+    description: 'Generate a professional superbill in 60 seconds. Free, private, no account needed.',
+    creator: '@billiefyi',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 };
 

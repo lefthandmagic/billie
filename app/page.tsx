@@ -1,8 +1,38 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Billie — Free Superbill Generator for Therapists',
+  description: 'Generate professional superbills in 60 seconds. Free superbill tool for out-of-network therapists. No EHR subscription needed. NPI, CPT codes, ICD-10 — all included.',
+  alternates: { canonical: 'https://billie.fyi' },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Billie',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Web',
+  url: 'https://billie.fyi',
+  description: 'Free superbill generator for out-of-network therapists. Generate professional superbills with CPT codes and ICD-10 diagnosis codes in 60 seconds.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  audience: {
+    '@type': 'Audience',
+    audienceType: 'Out-of-network therapists, LCSWs, LMFTs, LPCs, Psychologists',
+  },
+};
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Nav */}
       <nav className="border-b border-slate-100">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
