@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { track } from '@vercel/analytics';
 import { ProviderProfile, Patient, SuperbillDraft } from '@/lib/types';
 import {
   getProvider, saveProvider,
@@ -55,15 +56,18 @@ export default function ToolPage() {
   }, [mounted, provider]);
 
   function handleSaveProvider(p: ProviderProfile) {
+    const isFirst = !provider;
     saveProvider(p);
     setProvider(p);
     setShowProfilePrompt(false);
     if (tab === 'profile') setTab('superbill');
+    if (isFirst) track('profile_saved');
   }
 
   function handleAddPatient(p: Patient) {
     addPatient(p);
     setPatients(getPatients());
+    track('patient_added');
   }
 
   function handleUpdatePatient(p: Patient) {
@@ -85,9 +89,11 @@ export default function ToolPage() {
     if (!provider) { setShowProfilePrompt(true); return; }
     setPreviewDraft(d);
     setStep('preview');
+    track('superbill_previewed', { session_count: d.sessions.length });
   }
 
   function handleDownload() {
+    track('pdf_downloaded');
     if (!emailCaptured) {
       setShowEmailModal(true);
     }
@@ -99,6 +105,7 @@ export default function ToolPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
     }).catch(() => {});
+    track('email_captured');
     setEmailCaptured(true);
     setShowEmailModal(false);
   }
