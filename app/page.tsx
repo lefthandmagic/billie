@@ -47,33 +47,113 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-20">
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-16 pb-10">
         <div className="inline-flex items-center gap-2 bg-teal-50 text-teal-700 text-sm font-medium px-4 py-1.5 rounded-full mb-8 border border-teal-100">
           <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
-          Free · No account needed · Private
+          Free · No account needed · Nothing uploaded
         </div>
 
         <h1 className="text-5xl sm:text-6xl font-bold text-slate-900 leading-tight max-w-3xl mb-6">
-          Beautiful superbills for{' '}
-          <span className="text-teal-600">therapists</span>
+          Stop recreating the same{' '}
+          <span className="text-teal-600">Word doc</span>{' '}
+          every month
         </h1>
 
-        <p className="text-xl text-slate-500 max-w-xl mb-10 leading-relaxed">
-          Generate a professional superbill in 60 seconds. No $99/month EHR subscription required.
-          Everything stays in your browser — nothing is uploaded.
+        <p className="text-xl text-slate-500 max-w-xl mb-6 leading-relaxed">
+          Billie generates professional superbills for out-of-network therapists in under 60 seconds.
+          Fill your NPI and credentials once — every superbill after that takes a minute.
         </p>
 
-        <Link
-          href="/tool"
-          className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-teal-100"
-        >
-          Try it free — no account needed
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </Link>
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+          <Link
+            href="/tool"
+            className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-teal-100"
+          >
+            Generate my first superbill →
+          </Link>
+          <Link
+            href="/blog/how-to-create-a-superbill-for-therapists"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-700 font-medium px-4 py-4 text-base transition-colors"
+          >
+            What's a superbill? →
+          </Link>
+        </div>
 
-        <p className="mt-4 text-sm text-slate-400">For LCSWs, LMFTs, LPCs, Psychologists, and Psychiatrists</p>
+        <p className="text-sm text-slate-400 mb-12">For LCSWs, LMFTs, LPCs, Psychologists, and Psychiatrists</p>
+      </section>
+
+      {/* PDF Mockup */}
+      <section className="px-6 pb-16">
+        <div className="max-w-2xl mx-auto">
+          <p className="text-center text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">What your patients receive</p>
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden">
+            {/* PDF Header */}
+            <div className="bg-teal-600 px-6 py-4 flex items-center justify-between">
+              <div>
+                <p className="text-white font-bold text-lg">Billie</p>
+                <p className="text-teal-100 text-xs tracking-widest uppercase">Superbill / Statement of Services</p>
+              </div>
+              <div className="text-right">
+                <p className="text-teal-100 text-xs">Statement Date</p>
+                <p className="text-white text-sm font-semibold">April 23, 2026</p>
+              </div>
+            </div>
+            {/* Two column info */}
+            <div className="grid grid-cols-2 gap-4 px-6 py-4 bg-slate-50 text-xs border-b border-slate-100">
+              <div>
+                <p className="font-semibold text-slate-400 uppercase tracking-wide text-[10px] mb-2">Rendering Provider</p>
+                <p className="font-semibold text-slate-800">Dr. Sarah Chen, LCSW</p>
+                <p className="text-slate-500">NPI: 1234567890</p>
+                <p className="text-slate-500">Tax ID: 12-3456789</p>
+                <p className="text-slate-500">License: CA #LCS12345</p>
+                <p className="text-slate-500">456 Therapy Lane, San Francisco CA 94102</p>
+              </div>
+              <div>
+                <p className="font-semibold text-slate-400 uppercase tracking-wide text-[10px] mb-2">Patient</p>
+                <p className="font-semibold text-slate-800">Alex Johnson</p>
+                <p className="text-slate-500">DOB: 03/15/1988</p>
+                <p className="text-slate-500">Payer: Blue Cross Blue Shield</p>
+                <p className="text-slate-500">Member ID: BCB987654321</p>
+              </div>
+            </div>
+            {/* Table */}
+            <div className="px-6 py-4">
+              <p className="font-semibold text-slate-400 uppercase tracking-wide text-[10px] mb-3">Services Rendered</p>
+              <div className="w-full text-xs">
+                <div className="grid grid-cols-12 bg-teal-600 text-white rounded px-2 py-1.5 mb-1 font-semibold">
+                  <span className="col-span-2">Date</span>
+                  <span className="col-span-1">POS</span>
+                  <span className="col-span-4">Procedure (CPT)</span>
+                  <span className="col-span-3">Diagnosis</span>
+                  <span className="col-span-1 text-right">Fee</span>
+                  <span className="col-span-1 text-right">Amt</span>
+                </div>
+                {[
+                  ['04/07/26', '11', '90837', 'Individual therapy, 60 min', 'F41.1', '$175', '$175'],
+                  ['04/14/26', '02', '90837', 'Individual therapy, 60 min', 'F41.1', '$175', '$175'],
+                  ['04/21/26', '11', '90837', 'Individual therapy, 60 min', 'F41.1', '$175', '$175'],
+                ].map(([date, pos, cpt, desc, dx, fee, amt], i) => (
+                  <div key={i} className={`grid grid-cols-12 px-2 py-1.5 ${i % 2 === 1 ? 'bg-slate-50' : ''}`}>
+                    <span className="col-span-2 text-slate-700">{date}</span>
+                    <span className="col-span-1 text-slate-400">{pos}</span>
+                    <span className="col-span-4 text-slate-700">{cpt} <span className="text-slate-400">{desc}</span></span>
+                    <span className="col-span-3 text-teal-700 font-medium">{dx}</span>
+                    <span className="col-span-1 text-right text-slate-700">{fee}</span>
+                    <span className="col-span-1 text-right text-slate-700">{amt}</span>
+                  </div>
+                ))}
+                <div className="flex justify-end pt-2 mt-1 border-t border-slate-200">
+                  <span className="text-slate-500 text-xs mr-4">Total Charged:</span>
+                  <span className="font-bold text-teal-600">$525.00</span>
+                </div>
+              </div>
+            </div>
+            {/* Footer */}
+            <div className="px-6 py-3 bg-teal-50 border-t border-teal-100">
+              <p className="text-[10px] text-teal-600">This is not a bill. Submit to your insurance company for out-of-network reimbursement. · Generated by Billie · billie.fyi</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Features */}

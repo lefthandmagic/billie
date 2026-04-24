@@ -52,7 +52,8 @@ export default function ToolPage() {
   }, []);
 
   useEffect(() => {
-    if (mounted && !provider) setShowProfilePrompt(true);
+    // Don't ambush visitors with a modal on load — let them see the tool first
+    // Profile prompt only appears when they try to generate a superbill
   }, [mounted, provider]);
 
   function handleSaveProvider(p: ProviderProfile) {
@@ -86,7 +87,10 @@ export default function ToolPage() {
   }
 
   function handleGenerate(d: SuperbillDraft) {
-    if (!provider) { setShowProfilePrompt(true); return; }
+    if (!provider) {
+      setTab('profile');
+      return;
+    }
     setPreviewDraft(d);
     setStep('preview');
     trackEvent('superbill_previewed', { session_count: d.sessions.length });
@@ -164,22 +168,25 @@ export default function ToolPage() {
         </div>
       </nav>
 
-      {/* No profile banner */}
-      {!provider && (
-        <div className="bg-amber-50 border-b border-amber-200">
-          <div className="max-w-4xl mx-auto px-4 py-2 flex items-center justify-between">
-            <p className="text-sm text-amber-800">Set up your provider profile to generate superbills.</p>
-            <Button size="sm" onClick={() => setShowProfilePrompt(true)} className="bg-amber-600 hover:bg-amber-700">
-              Set up now
-            </Button>
-          </div>
-        </div>
-      )}
 
       {/* Main content */}
       <main className="max-w-4xl mx-auto px-4 py-8">
         {tab === 'superbill' && (
           <div>
+            {!provider && (
+              <div className="bg-teal-50 border border-teal-100 rounded-2xl p-5 mb-4 flex items-start gap-4">
+                <div className="text-2xl">👋</div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-teal-900 mb-1">Welcome to Billie — let's set up your profile first</p>
+                  <p className="text-sm text-teal-700 mb-3">
+                    You'll fill in your NPI, credentials, and address once. After that, every superbill takes under 60 seconds.
+                  </p>
+                  <Button size="sm" onClick={() => setTab('profile')}>
+                    Set up my profile →
+                  </Button>
+                </div>
+              </div>
+            )}
             {step === 'form' ? (
               <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                 <div className="mb-6">
@@ -231,13 +238,6 @@ export default function ToolPage() {
         )}
       </main>
 
-      {/* Profile setup modal */}
-      <Modal open={showProfilePrompt} onClose={() => provider && setShowProfilePrompt(false)} title="Set up your provider profile" size="lg">
-        <p className="text-sm text-slate-500 mb-6">
-          Your profile is saved only in this browser — nothing is uploaded. Fill it once and it auto-fills every superbill.
-        </p>
-        <ProviderForm initial={provider} onSave={handleSaveProvider} />
-      </Modal>
 
       <EmailCaptureModal
         open={showEmailModal}
