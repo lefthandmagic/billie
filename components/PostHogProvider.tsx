@@ -13,6 +13,9 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       capture_pageleave: true,
       persistence: 'localStorage',
     });
+    // Ensure a consistent global reference for downstream event helpers
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (globalThis as any).posthog = posthog;
   }, []);
 
   return <>{children}</>;
